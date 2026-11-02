@@ -60,31 +60,13 @@
     .feature {border:1px solid #e4ebf4;background:#f8fafd;border-radius:11px;padding:13px 15px}
     .feature strong {display:block;color:#1e4f85;font-size:19px;letter-spacing:-.02em}
     .feature span {display:block;font-size:12px;color:#698096}
-    .control-wrap {border:1px solid #dfe8f2;border-radius:14px;padding:19px 22px 22px;background:#fbfcfe}
-    .visual {background:#101d33;border-radius:12px;overflow:hidden;display:flex;justify-content:center;align-items:center;margin-bottom:20px}
-    .visual canvas {display:block;max-width:100%;height:auto!important}
-    .value-line {display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:800;color:#2c4058}
-    #brightness-value {font-size:17px;color:#236ac1;font-weight:800;font-variant-numeric:tabular-nums}
-    #slider-holder {margin-top:17px}
-    #slider-holder input[type=range] {display:block;width:100%;accent-color:#2876d0;cursor:pointer;margin:0}
-    .ends {display:flex;justify-content:space-between;color:#75879b;font-size:12px;margin-top:10px}
-    .buttons {display:flex;flex-wrap:wrap;gap:10px;margin-top:23px}
-    button {border:0;border-radius:9px;padding:11px 18px;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
-    #connect-button {background:#276eb9;color:#fff;flex:1}
-    #connect-button:hover:not(:disabled) {background:#1d5e9e}
-    #disconnect-button {background:#e8eef5;color:#425a74}
-    button:disabled {opacity:.5;cursor:not-allowed}
-    .status {font-size:13px;color:#64758a;margin:12px 0 0;min-height:20px}
     .status.good {color:#087753}.status.error {color:#a93232}
-    .notice {border-left:3px solid #5a92c8;background:#f2f7fc;color:#4c6681;border-radius:0 8px 8px 0;padding:10px 14px;margin-top:16px;font-size:13px}
     ol,ul {padding-left:22px}
     li {margin:5px 0}
     .result {padding:13px 17px;background:#f5f8fc;border:1px solid #e4ebf3;border-radius:10px}
     footer {text-align:center;color:#8a9aae;font-size:12px;margin-top:30px}
-    @media(max-width:650px){.wrap{padding:16px 12px 45px}.hero{padding:27px 23px}.section{padding:24px 20px}.photo-grid,.feature-grid,.code-grid{grid-template-columns:1fr}.section h2{font-size:21px}.control-wrap{padding:13px}.buttons{flex-direction:column}.buttons button{width:100%}}
+    @media(max-width:650px){.wrap{padding:16px 12px 45px}.hero{padding:27px 23px}.section{padding:24px 20px}.photo-grid,.feature-grid,.code-grid{grid-template-columns:1fr}.section h2{font-size:21px}}
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js" defer></script>
-  <script src="sketch.js" defer></script>
 </head>
 <body>
   <main class="wrap">
@@ -96,7 +78,7 @@
     </header>
 
     <nav aria-label="문서 목차">
-      <a href="#intro">프로젝트 소개</a><a href="#video">작동 영상</a><a href="#wiring">스케치·연결도</a><a href="#control">LED 제어</a><a href="#code">코드</a><a href="#theory">동작 원리</a><a href="#result">결과 및 고찰</a>
+      <a href="#intro">프로젝트 소개</a><a href="#video">작동 영상</a><a href="#wiring">스케치·연결도</a><a href="#code">코드</a><a href="#theory">동작 원리</a><a href="#result">결과 및 고찰</a>
     </nav>
 
     <section class="section" id="intro">
@@ -145,22 +127,8 @@
       <p class="muted">일반 LED 기준 배선이다. 전류 제한용 저항을 직렬로 연결해야 한다.</p>
     </section>
 
-    <section class="section" id="control">
-      <h2><span class="section-num">03.</span>p5.js 슬라이더로 LED 밝기 제어</h2>
-      <p class="sub">아두이노 UNO를 USB로 연결한 후 브라우저에서 슬라이더를 조작할 수 있다.</p>
-      <div class="control-wrap">
-        <div class="visual" id="sketch-holder" aria-label="LED 밝기 미리보기"></div>
-        <div class="value-line"><label for="led-slider">LED 밝기</label><output id="brightness-value" for="led-slider">0 / 255</output></div>
-        <div id="slider-holder"></div>
-        <div class="ends"><span>OFF · 0</span><span>MAX · 255</span></div>
-        <div class="buttons"><button type="button" id="connect-button">아두이노 연결</button><button type="button" id="disconnect-button" disabled>연결 해제</button></div>
-        <p class="status" id="connection-status" role="status" aria-live="polite">연결 안 됨</p>
-      </div>
-      <p class="notice">실제 LED를 제어하려면 PC Chrome 또는 Edge에서 접속하고, USB로 연결된 UNO의 COM 포트를 선택해야 한다. 아두이노 IDE 시리얼 모니터는 닫아둔다. 아두이노 없이도 화면의 LED 미리보기는 작동한다.</p>
-    </section>
-
     <section class="section" id="code">
-      <h2><span class="section-num">04.</span>아두이노 및 p5.js 코드</h2>
+      <h2><span class="section-num">03.</span>아두이노 및 p5.js 코드</h2>
       <p class="sub">Arduino UNO는 받은 1바이트 값을 PWM 밝기 값으로 사용하고, p5.js는 슬라이더 값(0~255)을 시리얼 통신으로 전송한다.</p>
       <h3>Arduino IDE 코드</h3>
       <pre><code>// Arduino UNO · LED PWM 제어
@@ -178,14 +146,14 @@ void loop() {
     analogWrite(ledPin, brightness);
   }
 }</code></pre>
-      <div class="code-links"><a href="sketch.js" target="_blank" rel="noopener">p5.js 코드 보기 (sketch.js)</a></div>
+      <div class="code-links"><a href="sketch.js" target="_blank" rel="noopener">p5.js 원본 코드 보기 (sketch.js)</a><a href="arduino_led.ino" target="_blank" rel="noopener">Arduino 원본 코드 보기 (.ino)</a></div>
       <h3>실제 작성 코드 캡처</h3>
       <div id="code-photos-placeholder" class="media placeholder"><strong>코드 캡처 이미지 추가 예정</strong><small><code>code1.jpg</code>, <code>code2.jpg</code> … 이름으로 업로드하면 이 아래에 표시됩니다.</small></div>
       <div id="code-photo-grid" class="code-grid" aria-label="코드 캡처 이미지"></div>
     </section>
 
     <section class="section" id="theory">
-      <h2><span class="section-num">05.</span>동작 원리</h2>
+      <h2><span class="section-num">04.</span>동작 원리</h2>
       <h3>1) p5.js 슬라이더 입력</h3>
       <p><code>createSlider(0, 255, 0, 1)</code>로 밝기 값을 입력한다. 슬라이더를 움직일 때마다 해당 값을 읽어 전송 대상으로 설정한다.</p>
       <h3>2) Web Serial을 이용한 데이터 전송</h3>
@@ -195,7 +163,7 @@ void loop() {
     </section>
 
     <section class="section" id="result">
-      <h2><span class="section-num">06.</span>결과 및 고찰</h2>
+      <h2><span class="section-num">05.</span>결과 및 고찰</h2>
       <p>이번 프로젝트는 웹에서 조작한 값을 물리적인 LED 출력과 연결하는 것을 목표로 한다. 슬라이더의 범위를 PWM 제어에 사용하는 0~255로 맞춰, 입력값을 별도 변환하지 않고 아두이노에 전달하도록 구성했다.</p>
       <div class="result"><strong>확인할 동작</strong>
         <ul><li>0을 선택하면 LED가 꺼진다.</li><li>값을 증가시키면 LED가 점차 밝아진다.</li><li>255에서 최대 밝기로 출력된다.</li></ul>
